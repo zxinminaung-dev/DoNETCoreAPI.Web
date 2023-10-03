@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DoNETCoreAPI.Web.props" />
+</Project>

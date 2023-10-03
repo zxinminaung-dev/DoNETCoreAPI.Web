@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "nVQYllOgPX4prLf9I5P+1YQRG8X7td5qiiId/RROCBg=",
+  "Source": "DoNETCoreAPI.Web",
+  "BasePath": "_content/DoNETCoreAPI.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
