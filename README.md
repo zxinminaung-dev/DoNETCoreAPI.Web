@@ -17,3 +17,6 @@
 
 [Linq](https://dotnettutorials.net/course/linq/)
 
+
+[System.Web.Helpers.Crypto](https://learn.microsoft.com/en-us/dotnet/api/system.web.helpers.crypto?view=aspnet-webpages-3.2
+
