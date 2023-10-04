@@ -1,0 +1,5 @@
+DoNETCoreAPI.Web/bin/
+DoNETCoreAPI.Web/obj/
+*.user
+*.suo
+*.vs

@@ -16,7 +16,8 @@ connectionString = connectionSection["DefaultConnection"];
 //Autofac module registration
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>(b =>b.RegisterModule(new ServiceModule(connectionString) ));
-
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(b => b.RegisterModule(new EFModule(connectionString)));
 // Add services to the container.
 var assembly= typeof(Program).Assembly.GetExportedTypes()
                .Where(type => typeof(ControllerBase).IsAssignableFrom(type)).ToArray();
@@ -31,21 +32,18 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+{ 
+
 }
 
 app.UseHttpsRedirection();
 app.UseCors(builder =>
 {
-    builder.AllowAnyOrigin();
     builder.AllowAnyMethod();
     builder.AllowAnyHeader();
     builder.AllowCredentials();

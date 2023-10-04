@@ -14,8 +14,8 @@ namespace DoNETCoreAPI.Web.Utilities.Modules
         protected override void Load(ContainerBuilder builder)
         {
             Autofac.NamedParameter para = new NamedParameter("ConnectionString", connectionString);
-            builder.RegisterType(typeof(DatabaseContext)).As(typeof(IDatabaseContext)).WithParameter(para).InstancePerLifetimeScope();
-            builder.RegisterType(typeof(UnitOfWork)).As(typeof(IUnitOfWork)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(DatabaseContext)).As(typeof(IDatabaseContext)).WithParameter(para).PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterType(typeof(UnitOfWork)).As(typeof(IUnitOfWork)).PropertiesAutowired().InstancePerLifetimeScope();
         }
     }
 }

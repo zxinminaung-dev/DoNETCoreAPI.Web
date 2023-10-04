@@ -6,5 +6,6 @@ namespace DoNETCoreAPI.Web.Repository.settings.User
 {
     public interface IUserRepository : IReadWriteRepository<UserEntity, int>
     {
+
     }
 }

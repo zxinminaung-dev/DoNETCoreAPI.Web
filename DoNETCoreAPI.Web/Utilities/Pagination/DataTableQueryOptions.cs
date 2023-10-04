@@ -1,14 +1,15 @@
-﻿using DoNETCoreAPI.Web.Utilities.Enumerations;
+﻿using DoNETCoreAPI.Web.Entity.common;
+using DoNETCoreAPI.Web.Utilities.Enumerations;
 
 namespace DoNETCoreAPI.Web.Utilities.Pagination
 {
-    public class JqueryDataTableQueryOptions<TEntity>   where TEntity : class
+    public class DataTableQueryOptions<TEntity> where TEntity : BaseEntity
     {
         public string Draw { get; set; }
-        public int Start { get; set; } = 0;
-        public int Length { get; set; } = 10;
+        public int Start { get; set; }
+        public int Length { get; set; }
 
-        public JqueryDataTableQueryOptions()
+        public DataTableQueryOptions()
         {
             SortOrder = SortOrder.ASC;
 

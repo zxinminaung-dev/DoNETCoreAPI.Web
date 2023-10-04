@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace DoNETCoreAPI.Web.Repository.common
 {
-    public class Repository<TEntity, TEntityID> : IRepository<TEntity, TEntityID> where TEntity : class
+    public class Repository<TEntity, TEntityID> : IRepository<TEntity, TEntityID> where TEntity : BaseEntity
     {
         public readonly IDatabaseContext context;
         protected string[] includes;

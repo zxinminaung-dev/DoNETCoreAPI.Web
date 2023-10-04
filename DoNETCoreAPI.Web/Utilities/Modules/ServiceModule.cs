@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using System.Reflection;
 
 namespace DoNETCoreAPI.Web.Utilities.Modules
 {
@@ -13,9 +14,9 @@ namespace DoNETCoreAPI.Web.Utilities.Modules
         {
             builder.RegisterModule(new EFModule(ConnectionString));
             builder.RegisterModule(new RepositoryModule());
-            builder.RegisterAssemblyTypes()
+            builder.RegisterAssemblyTypes(Assembly.Load("DoNETCoreAPI.Web"))
                 .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces()
+                .AsImplementedInterfaces().PropertiesAutowired()
                 .InstancePerLifetimeScope();
         }
     }

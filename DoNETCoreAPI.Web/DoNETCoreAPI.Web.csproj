@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityConfiguration\" />
     <Folder Include="Service\" />
   </ItemGroup>
 
