@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DoNETCoreAPI.Web.Entity.common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DoNETCoreAPI.Web.Context
@@ -32,6 +33,20 @@ namespace DoNETCoreAPI.Web.Context
         }
         public override int SaveChanges()
         {
+            #region ForSoftDelete
+            ChangeTracker.DetectChanges();
+            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+            foreach (var item in markedAsDeleted)
+            {
+                if (item.Entity is ISoftDeleteEntity entity)
+                {
+                    // Set the entity to unchanged (if we mark the whole entity as Modified, every field gets sent to Db as an update)
+                    item.State = EntityState.Unchanged;
+                    // Only update the IsDeleted flag - only this will get sent to the Db
+                    entity.IsDeleted = true;
+                }
+            }
+            #endregion ForSoftDelete
             return base.SaveChanges();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
