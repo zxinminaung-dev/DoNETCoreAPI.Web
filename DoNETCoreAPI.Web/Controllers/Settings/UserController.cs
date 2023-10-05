@@ -2,6 +2,8 @@
 using DoNETCoreAPI.Web.Entity.settings;
 using DoNETCoreAPI.Web.Mappers;
 using DoNETCoreAPI.Web.Repository.settings.User;
+using DoNETCoreAPI.Web.Service.Settings;
+using DoNETCoreAPI.Web.Utilities;
 using DoNETCoreAPI.Web.Utilities.Pagination;
 using DoNETCoreAPI.Web.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +17,12 @@ namespace DoNETCoreAPI.Web.Controllers.Settings
     {
         IUserRepository _userRepo;
         UserMapper mapper;
-        public UserController(IUserRepository userRepository) 
+        UserService userService;
+        public UserController(IUserRepository userRepository,UserService service) 
         {
             this._userRepo = userRepository;
-            mapper = new UserMapper();
+            this.userService = service;
+            this.mapper = new UserMapper();
         }
         [HttpGet]
         public JsonResult Get()
@@ -35,6 +39,64 @@ namespace DoNETCoreAPI.Web.Controllers.Settings
             result = _userRepo.GetPagedResults(queryOptions);
             JQueryDataTablePagedResult<UserViewModel> vmlist = mapper.MapModelToListViewModel(result);
             return vmlist;
+        }
+        [HttpPost]
+        public JsonResult Save(UserViewModel vm)
+        {
+            CommandResultModel result = new CommandResultModel();
+            try
+            {
+                if (vm.Id > 0)
+                {
+                    UserEntity user = _userRepo.Get(vm.Id);
+                    user = mapper.MapUpdateViewModelToModel(vm,user);
+                    result = userService.SaveOrUpdate(user);
+                }
+                else
+                {
+                    UserEntity user = new UserEntity();
+                    user = mapper.MapViewModelToModel(vm);
+                    user.Password = PasswordHashHelper.HashPassword(user.Password);
+                    result = userService.SaveOrUpdate(user);
+                }         
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return Json(result);
+        }
+        [HttpGet]
+        [Route("GetById")]
+        public JsonResult GetById(int id)
+        {
+            UserViewModel vm = new UserViewModel();
+            try
+            {
+                UserEntity user = _userRepo.Get(id);
+                vm = mapper.MapModelToViewModel(user);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }            
+            return Json(vm);
+        }
+        [HttpDelete]
+        [Route("delete")]
+        public JsonResult Delete(int id)
+        {
+            CommandResultModel result = new CommandResultModel();
+            try
+            {
+                UserEntity user = _userRepo.Get(id);
+                result = userService.Delete(user);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return Json(result);
         }
     }
 }

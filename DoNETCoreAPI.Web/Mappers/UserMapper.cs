@@ -1,4 +1,5 @@
 ﻿using DoNETCoreAPI.Web.Entity.settings;
+using DoNETCoreAPI.Web.Utilities;
 using DoNETCoreAPI.Web.Utilities.Enumerations;
 using DoNETCoreAPI.Web.Utilities.Pagination;
 using DoNETCoreAPI.Web.ViewModel;
@@ -67,6 +68,30 @@ namespace DoNETCoreAPI.Web.Mappers
             vmlist.recordsTotal = list.recordsTotal;
             return vmlist;
         }
-
+        public UserEntity MapViewModelToModel(UserViewModel vm)
+        {
+            UserEntity model = new UserEntity();
+            model.UserName = vm.UserName;
+            model.Password = vm.Password;
+            model.Status = vm.Status;
+            return model;
+        }
+        public UserEntity MapUpdateViewModelToModel(UserViewModel vm,UserEntity model)
+        {
+            model.Id = vm.Id;
+            model.UserName = vm.UserName;
+            model.Password = model.Password;
+            model.Status = vm.Status;
+            return model;
+        }
+        public UserViewModel MapModelToViewModel(UserEntity model)
+        {
+            UserViewModel vm = new UserViewModel();
+            vm.Id = model.Id;
+            vm.UserName = model.UserName;
+            vm.Password=model.Password;
+            vm.Status = model.Status;
+            return vm;            
+        }
     }
 }
