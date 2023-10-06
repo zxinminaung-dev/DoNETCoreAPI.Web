@@ -18,10 +18,9 @@ namespace DoNETCoreAPI.Web.Controllers.Settings
         IUserRepository _userRepo;
         UserMapper mapper;
         UserService userService;
-        public UserController(IUserRepository userRepository,UserService service) 
+        public UserController(IUserRepository userRepository) 
         {
             this._userRepo = userRepository;
-            this.userService = service;
             this.mapper = new UserMapper();
         }
         [HttpGet]

@@ -176,3 +176,4 @@ D:\C#\DoNETCoreAPI.Web\DoNETCoreAPI.Web\obj\Debug\net6.0\refint\DoNETCoreAPI.Web
 D:\C#\DoNETCoreAPI.Web\DoNETCoreAPI.Web\obj\Debug\net6.0\DoNETCoreAPI.Web.pdb
 D:\C#\DoNETCoreAPI.Web\DoNETCoreAPI.Web\obj\Debug\net6.0\DoNETCoreAPI.Web.genruntimeconfig.cache
 D:\C#\DoNETCoreAPI.Web\DoNETCoreAPI.Web\obj\Debug\net6.0\ref\DoNETCoreAPI.Web.dll
+D:\C#\DoNETCoreAPI.Web\DoNETCoreAPI.Web\bin\Debug\net6.0\System.Web.Helpers.Crypto.dll

@@ -5,7 +5,7 @@ using DoNETCoreAPI.Web.Utilities;
 
 namespace DoNETCoreAPI.Web.Service.Settings
 {
-    public abstract class UserService : BaseService<UserEntity, int, IUserRepository>
+    public class UserService : BaseService<UserEntity, int, IUserRepository>
     {
         public UserService(IUserRepository _repo, IUnitOfWork _uom) 
             : base(_repo, _uom)
