@@ -18,13 +18,13 @@ jobs:
           donet-version: '6.0.x'
 
       - name: Restore
-        run: donet restore ./DoNETCoreAPI.sln
+        run: donet restore ./DoNETCoreAPI.Web.sln
 
       - name: Build
-        run: donet build ./DoNETCoreAPI.sln --configuration Release --no-restore
+        run: donet build ./DoNETCoreAPI.Web.sln --configuration Release --no-restore
 
       - name: Publish
-        run:  donet publish ./DoNETCoreAPI.sln --configuration Release --no-build
+        run:  donet publish ./DoNETCoreAPI.Web.sln --configuration Release --no-build
         
       
       
