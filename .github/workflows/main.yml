@@ -1,25 +1,39 @@
-name: Upload dotnet package
+name: Publish 🚀
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+env:
+  AZURE_WEBAPP_NAME: current-time-service
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
+    
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: dotnet build --configuration Release DoNETCoreAPI.WEB.csproj
-      - name: Create the package
-        run: dotnet pack --configuration Release DoNETCoreAPI.WEB.csproj
-      - name: Publish the package to GPR
-        run: dotnet nuget push <my project>/bin/Release/*.nupkg
-      
+          
+      - name: Restore
+        run: dotnet restore ./DoNETCoreAPI.Web.sln
+        
+      - name: Build
+        run: dotnet build ./DoNETCoreAPI.Web.sln --configuration Release --no-restore
+        
+      - name: Publish
+        run: dotnet publish ./DoNETCoreAPI.Web.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        
+      - name: Deployment
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
